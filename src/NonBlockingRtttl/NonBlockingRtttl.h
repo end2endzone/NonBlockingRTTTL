@@ -1,48 +1,15 @@
 // ---------------------------------------------------------------------------
-// NonBlockingRtttl Library - v1.0 - 03/19/2016
-//
 // AUTHOR/LICENSE:
-//  The following code was written by Antoine Beauchamp.
-//  The code & updates for the library can be found on http://end2endzone.com
-//  Project home: http://end2endzone.com
+//  The following code was written by Antoine Beauchamp. For other authors, see AUTHORS file.
+//  The code & updates for the library can be found at http://github.com/end2endzone/NonBlockingRTTTL
 //  Original source code for the RTTL player: https://code.google.com/archive/p/rogue-code/wikis/ToneLibraryDocumentation.wiki
 //  MIT License: http://www.opensource.org/licenses/mit-license.php
-//
-// DISCLAIMER:
-//  This software is furnished "as is", without technical support, and with no 
-//  warranty, express or implied, as to its usefulness for any purpose.
-//
-// PURPOSE:
-//  Most code that can be found on the internet that allows you to "play" an RTTL string
-//  is build the same way: sequential calls to the tone() function followed by a delay()
-//  function. This type of implementation might be good for robots but not for realtime
-//  application or projects that needs to monitor pins while the song is playing.
-//  This library is non-blocking (https://en.wikipedia.org/wiki/Non-blocking_algorithm)
-//  which make it suitable to be used by more advanced algorithm.
-//  The NON-BLOCKING RTTTL library is a port of the RTTTL example from the Tone library.
-//
-// USAGE:
-//  Call rtttl::begin() to setup the NON-BLOCKING RTTTL library. Then call 
-//  rtttl::play() to update the library's state and play notes as required. Use
-//  rtttl::done() or rtttl::isPlaying() to know if the library is done playing
-//  the given song. Anytime playing one can call rtttl::stop() to stop playing
-//  the current song.
-//
-//  Define RTTTL_NONBLOCKING_INFO to enable the debugging of the library
-//  state on the serial port.
-//
-//  Use NONBLOCKINGRTTTL_VERSION to read the current version of the library.
-//
-// HISTORY:
-// 03/19/2016 v1.0 - Initial release.
-//
 // ---------------------------------------------------------------------------
-
 
 #ifndef NonBlockingRtttl_h
 #define NonBlockingRtttl_h
 
-#define NONBLOCKINGRTTTL_VERSION 1.0
+#define NONBLOCKINGRTTTL_VERSION 1.0.0
 
 #include "Arduino.h"
 
