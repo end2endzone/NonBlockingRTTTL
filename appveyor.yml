@@ -60,7 +60,7 @@ configuration: Release
 #  project: cmake\build\NonBlockingRtttl.sln
 #  verbosity: minimal
 
-after_build:
+build_script:
 - cmd: call c:\projects\NonBlockingRtttl\ci\appveyor\build_deploy_package.bat
 
 #---------------------------------#
