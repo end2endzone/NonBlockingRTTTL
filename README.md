@@ -16,21 +16,18 @@ NonBlockingRTTTL is a non-blocking arduino library for playing RTTTL melodies.
 
 It's main features are:
 
-*  feature1
-*  feature2
-*  feature3
 *  Really small increase in memory & code footprint compared to the usual blocking algorithm.
 *  Allows your program to read/write IOs pins while playing. Implementing "stop" or "next song" push buttons is really easy!
 
 # Purpose
 
-Most code that can be found on the internet that allows you to "play" an RTTTL string is build the same way: sequential calls to the *tone() function* followed by a delay() function. This type of implementation might be good for robots but not for realtime application or projects that needs to monitor pins while the song is playing.
+Most code that can be found on the internet that allows you to "play" an RTTTL string is build the same way: sequential calls to the *tone()* function followed by a call to the *delay()* function. This type of implementation might be good for robots but not for realtime application or projects that needs to monitor pins while the song is playing.
 
 This library is non-blocking which make it suitable to be used by more advanced algorithm. The non-blocking RTTTL library is a port of the RTTTL example from the [Tone library](http://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/rogue-code/Arduino-Library-Tone.zip).
 
 # RTTTL format
 
-The Ring Tone Text Transfer Language (RTTTL) audio format which is an audio format for storing single tone (monolithic)  melodies. Each melody is composed of successive tone frequencies.
+The Ring Tone Text Transfer Language (RTTTL) audio format is an audio format for storing single tone (monolithic) melodies. Each melody is composed of successive tone frequencies.
 
 The RTTTL format is [human readable](http://stackoverflow.com/questions/568671/why-should-i-use-a-human-readable-file-format) and usually more compressed than note & duration arrays which helps reduce its memory footprint.
 
@@ -54,7 +51,7 @@ Define *RTTTL_NONBLOCKING_INFO* to enable the debugging of the library state on 
 # Example
 
 ### Play melody:
-The following example plays 3 simple melodies. The first melody is played for 5 seconds and stopped. The second and third melodies and played completely and then the program restart again.
+The following example plays 3 melodies. The first melody is played for 5 seconds and stopped. The second and third melodies and played completely and then the program restart again.
 
 ```cpp
 #include <NonBlockingRtttl.h>
@@ -131,13 +128,6 @@ Test can be executed from the following two locations:
    2) Run the '*NonBlockingRTTTL_unittest.exe*' executable.
 
 See also the latest test results at the beginning of the document.
-
-# Compatible with
-
-NonBlockingRTTTL is only available for the Windows platform and has been tested with the following version of Windows:
-
-*   Windows XP
-*   Windows 7
 
 # Versioning
 
