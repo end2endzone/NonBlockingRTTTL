@@ -12,14 +12,14 @@ AppVeyor build statistics:
 
 # NonBlockingRTTTL
 
-NonBlockingRTTTL is a non-blocking arduino library for playing RTTTL melodies.
+NonBlockingRTTTL is a non-blocking arduino library for playing RTTTL melodies. The library allows your program to read or write IOs pins while playing. Implementing "stop" or "next song" push buttons is really easy!
 
 It's main features are:
 
 *  Fully support the RTTTL format standard.
 *  Support unofficial frequencies and tempo/beats per minutes
 *  Really small increase in memory & code footprint compared to the usual blocking algorithm.
-*  Allows your program to read/write IOs pins while playing. Implementing "stop" or "next song" push buttons is really easy!
+*  Play two monolithic melodies on two different pins using two piezo buzzer.
 
 # Purpose
 
