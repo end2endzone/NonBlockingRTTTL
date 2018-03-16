@@ -16,12 +16,26 @@ NonBlockingRTTTL is a non-blocking arduino library for playing RTTTL melodies.
 
 It's main features are:
 
+*  Fully support the RTTTL format standard.
+*  Support unofficial frequencies and tempo/beats per minutes
 *  Really small increase in memory & code footprint compared to the usual blocking algorithm.
 *  Allows your program to read/write IOs pins while playing. Implementing "stop" or "next song" push buttons is really easy!
 
 # Purpose
 
-Most code that can be found on the internet that allows you to "play" an RTTTL string is build the same way: sequential calls to the *tone()* function followed by a call to the *delay()* function. This type of implementation might be good for robots but not for realtime application or projects that needs to monitor pins while the song is playing.
+Most code that can be found on the internet that "play" an RTTTL string is build this way: sequential calls to the `tone()` function followed by a call to the `delay()` function:
+
+```cpp
+tone(pin, note1, duration1);
+delay(note_delay);
+tone(pin, note2, duration2);
+delay(note_delay);
+tone(pin, note3, duration3);
+delay(note_delay);
+//etc...
+```
+
+This type of implementation might be good for robots but not for realtime application or projects that needs to monitor pins while the song is playing.
 
 This library is non-blocking which make it suitable to be used by more advanced algorithm. The non-blocking RTTTL library is a port of the RTTTL example from the [Tone library](http://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/rogue-code/Arduino-Library-Tone.zip).
 
@@ -31,8 +45,6 @@ The Ring Tone Text Transfer Language (RTTTL) audio format is an audio format for
 
 The RTTTL format is [human readable](http://stackoverflow.com/questions/568671/why-should-i-use-a-human-readable-file-format) and usually more compressed than note & duration arrays which helps reduce its memory footprint.
 
-In the arduino world, melodies are usually written as an array of notes (frequencies) followed by the note’s duration (note1, duration1, note2, duration2, … ,  noteX, durationX).
-
 The format is really suitable for embedded device that are limited in memory which can’t store PCM (wav) or even MP3 data.
 
 *Note that RTTTL can also be spelled RTTL (Ringtone Text Transfer Language). According to Samsung phones, a ringtone can also be spelled as a single word...*
@@ -41,11 +53,11 @@ More information on the RTTTL format is available on its [Wikipedia acticle](htt
 
 # Usage
 
-Call *rtttl::begin()* to setup the non-blocking RTTTL library. Then call *rtttl::play()* to update the library’s state and play notes as required.
+Call `rtttl::begin()` to setup the non-blocking RTTTL library. Then call `rtttl::play()` to update the library’s state and play notes as required.
 
-Use *rtttl::done()* or *rtttl::isPlaying()* to know if the library is done playing the given song. Anytime playing, one can call *rtttl::stop()* to stop playing the current song.
+Use `rtttl::done()` or `rtttl::isPlaying()` to know if the library is done playing the given song. Anytime playing, one can call `rtttl::stop()` to stop playing the current song.
 
-Define *RTTTL_NONBLOCKING_INFO* to enable the debugging of the library state on the serial port. Use *NONBLOCKINGRTTTL_VERSION* to read the current version of the library.
+Define `RTTTL_NONBLOCKING_INFO` to enable the debugging of the library state on the serial port. Use `NONBLOCKINGRTTTL_VERSION` to read the current version of the library.
 
 
 # Example
@@ -80,7 +92,7 @@ void loop() {
  
       //play for 5 sec then stop.
       //note: this is a blocking code section
-      //use to demonstrate the use of stop
+      //use to demonstrate the use of stop()
       unsigned long start = millis();
       while( millis() - start < 5000 ) 
       {
@@ -121,11 +133,11 @@ Test are automatically build when building the solution. Please see the '*build 
 Test can be executed from the following two locations:
 
 1) From the Visual Studio IDE:
-   1) Select the project '*NonBlockingRTTTL_unittest*' as StartUp project.
+   1) Select the project `NonBlockingRTTTL_unittest` as StartUp project.
    2) Hit CTRL+F5 (Start Without Debugging)
 2) From the output binaries folder:
    1) Open a file navigator and browse to the output folder(for example c:\projects\NonBlockingRTTTL\cmake\build\bin\Release)
-   2) Run the '*NonBlockingRTTTL_unittest.exe*' executable.
+   2) Run the `NonBlockingRTTTL_unittest.exe` executable.
 
 See also the latest test results at the beginning of the document.
 
@@ -142,4 +154,3 @@ See also the list of [contributors](https://github.com/end2endzone/NonBlockingRT
 # License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
-
