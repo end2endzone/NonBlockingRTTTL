@@ -119,28 +119,6 @@ void loop() {
 }
 ```
 
-# Installing
-
-Please refer to file [INSTALL.md](INSTALL.md) for details on how installing/building the application.
-
-## Testing
-NonBlockingRTTTL comes with unit tests which tests for multiple combinations to validate the integrity of the library with multiple operating systems.
-
-Test are build using the Google Test v1.6.0 framework. For more information on how googletest is working, see the [google test documentation primer](https://github.com/google/googletest/blob/release-1.8.0/googletest/docs/V1_6_Primer.md).  
-
-Test are automatically build when building the solution. Please see the '*build step*' section for details on how to build the software.
-
-Test can be executed from the following two locations:
-
-1) From the Visual Studio IDE:
-   1) Select the project `NonBlockingRTTTL_unittest` as StartUp project.
-   2) Hit CTRL+F5 (Start Without Debugging)
-2) From the output binaries folder:
-   1) Open a file navigator and browse to the output folder(for example c:\projects\NonBlockingRTTTL\cmake\build\bin\Release)
-   2) Run the `NonBlockingRTTTL_unittest.exe` executable.
-
-See also the latest test results at the beginning of the document.
-
 # Versioning
 
 We use [Semantic Versioning 2.0.0](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/end2endzone/NonBlockingRTTTL/tags).
