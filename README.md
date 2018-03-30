@@ -19,7 +19,7 @@ It's main features are:
 *  Fully support the RTTTL format standard.
 *  Support unofficial frequencies and tempo/beats per minutes
 *  Really small increase in memory & code footprint compared to the usual blocking algorithm.
-*  Play two monolithic melodies on two different pins using two piezo buzzer.
+
 
 # Purpose
 
@@ -27,11 +27,11 @@ Most code that can be found on the internet that "play" an RTTTL string is build
 
 ```cpp
 tone(pin, note1, duration1);
-delay(note_delay);
+delay(note_delay1);
 tone(pin, note2, duration2);
-delay(note_delay);
+delay(note_delay2);
 tone(pin, note3, duration3);
-delay(note_delay);
+delay(note_delay3);
 //etc...
 ```
 
@@ -92,7 +92,7 @@ void loop() {
  
       //play for 5 sec then stop.
       //note: this is a blocking code section
-      //use to demonstrate the use of stop()
+      //used to demonstrate the use of stop()
       unsigned long start = millis();
       while( millis() - start < 5000 ) 
       {
@@ -119,15 +119,28 @@ void loop() {
 }
 ```
 
+# Build / Install
+
+Please refer to file [INSTALL.md](INSTALL.md) for details on how installing/building the application.
+
+# Testing
+
+N/A.
+
+The library does not provide any unit tests.
+
+
 # Versioning
 
 We use [Semantic Versioning 2.0.0](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/end2endzone/NonBlockingRTTTL/tags).
+
 
 # Authors
 
 * **Antoine Beauchamp** - *Initial work* - [end2endzone](https://github.com/end2endzone)
 
 See also the list of [contributors](https://github.com/end2endzone/NonBlockingRTTTL/blob/master/AUTHORS) who participated in this project.
+
 
 # License
 

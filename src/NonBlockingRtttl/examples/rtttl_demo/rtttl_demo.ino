@@ -24,7 +24,7 @@ void loop() {
 
       //play for 5 sec then stop.
       //note: this is a blocking code section
-      //use to demonstrate the use of stop
+      //used to demonstrate the use of stop
       unsigned long start = millis();
       while( millis() - start < 5000 ) 
       {
