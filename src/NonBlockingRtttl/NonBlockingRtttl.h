@@ -9,7 +9,7 @@
 #ifndef NonBlockingRtttl_h
 #define NonBlockingRtttl_h
 
-#define NONBLOCKINGRTTTL_VERSION 1.2.0
+#define NONBLOCKINGRTTTL_VERSION 1.1.1
 
 #include "Arduino.h"
 
