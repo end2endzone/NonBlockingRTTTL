@@ -53,7 +53,7 @@ More information on the RTTTL format is available on its [Wikipedia acticle](htt
 
 # Usage
 
-Call `rtttl::begin()` to setup the non-blocking RTTTL library. Then call `rtttl::play()` to update the library’s state and play notes as required.
+Call `rtttl::begin()` to setup the non-blocking RTTTL library then call `rtttl::play()` to update the library's state and play notes as required.
 
 Use `rtttl::done()` or `rtttl::isPlaying()` to know if the library is done playing the given song. Anytime playing, one can call `rtttl::stop()` to stop playing the current song.
 
@@ -124,8 +124,6 @@ void loop() {
 Please refer to file [INSTALL.md](INSTALL.md) for details on how installing/building the application.
 
 # Testing
-
-N/A.
 
 The library does not provide any unit tests.
 
