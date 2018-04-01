@@ -11,7 +11,7 @@
 # version format
 # version must contains build number to make sure that all commits are processed by appveyor.
 # If build number is not part of the version than appveyor build fails with the following message: "Build version x.y.z already exists."
-version: 1.2.0.{build}
+version: 1.1.1.{build}
 
 # branches to build
 branches:
