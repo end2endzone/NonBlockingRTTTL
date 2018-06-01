@@ -1,16 +1,8 @@
-# Notes:
-#   - Minimal appveyor.yml file is an empty file. All sections are optional.
-#   - Indent each level of configuration with 2 spaces. Do not use tabs!
-#   - All section names are case-sensitive.
-#   - Section names should be unique on each level.
-
 #---------------------------------#
 #      general configuration      #
 #---------------------------------#
 
 # version format
-# version must contains build number to make sure that all commits are processed by appveyor.
-# If build number is not part of the version than appveyor build fails with the following message: "Build version x.y.z already exists."
 version: "{branch} (#{build})"
 
 # branches to build
@@ -18,15 +10,9 @@ branches:
   only:
     - master
 
-# Do not build on tags (GitHub and BitBucket)
-skip_tags: true
-
 #---------------------------------#
 #    environment configuration    #
 #---------------------------------#
-
-# Build worker image (VM template)
-image: Visual Studio 2015
 
 # scripts that are called at very beginning, before repo cloning
 init:
