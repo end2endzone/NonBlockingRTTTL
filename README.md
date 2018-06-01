@@ -3,7 +3,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Github Releases](https://img.shields.io/github/release/end2endzone/NonBlockingRTTTL.svg)](https://github.com/end2endzone/NonBlockingRTTTL/releases)
 [![Build status](https://ci.appveyor.com/api/projects/status/wrsctc8vu3f3lq5o/branch/master?svg=true)](https://ci.appveyor.com/project/end2endzone/NonBlockingRTTTL/branch/master)
-[![Tests status](https://img.shields.io/appveyor/tests/end2endzone/NonBlockingRTTTL/master.svg)](https://ci.appveyor.com/project/end2endzone/NonBlockingRTTTL/branch/master/tests)
 
 AppVeyor build statistics:
 

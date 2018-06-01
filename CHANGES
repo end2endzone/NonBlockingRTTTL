@@ -1,3 +1,7 @@
+Changes for 1.2.0:
+
+* Fixed issue #3 - Move library to the root of the repository
+
 Changes for 1.1.1:
 
 * Updated README and INSTALL instructions for more clarity
