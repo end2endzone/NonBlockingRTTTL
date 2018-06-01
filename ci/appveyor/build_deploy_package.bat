@@ -15,12 +15,7 @@ call %REPOSITORY_ROOT%\version_info.bat
 
 set outfile="%REPOSITORY_ROOT%\deploy\NonBlockingRtttl v%PRODUCT_VERSION%.zip"
 
-set infiles=
-set infiles=%infiles% "%REPOSITORY_ROOT%\src\NonBlockingRtttl\*"
-set infiles=%infiles% "%REPOSITORY_ROOT%\AUTHORS"
-set infiles=%infiles% "%REPOSITORY_ROOT%\CHANGES"
-set infiles=%infiles% "%REPOSITORY_ROOT%\LICENSE"
-set infiles=%infiles% "%REPOSITORY_ROOT%\README.md"
+set infiles="%REPOSITORY_ROOT%"
 
 echo Generating portable install %outfile%
 echo using the following input files:
