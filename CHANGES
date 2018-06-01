@@ -1,7 +1,7 @@
 Changes for 1.2.0:
 
 * Fixed issue #3 - Move library to the root of the repository
-* New feature: Now using AppVeyor CI to build examples for validing code compilation.
+* New feature: Now using AppVeyor and Travis CI to build examples for validing code compilation.
 
 Changes for 1.1.1:
 

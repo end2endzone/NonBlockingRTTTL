@@ -1,0 +1,18 @@
+language: generic
+env:
+  global:
+    - ARDUINO_IDE_VERSION=1.8.4
+  matrix:
+    - BOARD="arduino:avr:nano:cpu=atmega328"
+before_install:
+  - wget http://downloads.arduino.cc/arduino-$ARDUINO_IDE_VERSION-linux64.tar.xz
+  - tar xf arduino-$ARDUINO_IDE_VERSION-linux64.tar.xz
+  - mv arduino-$ARDUINO_IDE_VERSION $HOME/arduino-ide
+  - export PATH=$PATH:$HOME/arduino-ide
+  - buildExampleSketch() { arduino --verbose-build --verify --board $BOARD $PWD/examples/$1/$1.ino; }
+install:
+  - mkdir -p $HOME/Arduino/libraries
+  - ln -s $PWD $HOME/Arduino/libraries/.
+script:
+  - buildExampleSketch rtttl_blocking
+  - buildExampleSketch rtttl_demo
