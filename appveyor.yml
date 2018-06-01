@@ -11,7 +11,7 @@
 # version format
 # version must contains build number to make sure that all commits are processed by appveyor.
 # If build number is not part of the version than appveyor build fails with the following message: "Build version x.y.z already exists."
-version: 1.1.2.{build}
+version: "{branch} (#{build})"
 
 # branches to build
 branches:
@@ -38,52 +38,13 @@ clone_folder: c:\projects\NonBlockingRtttl
 
 # scripts that run after cloning repository
 install:
-- ps: .\ci\appveyor\prepare_github_deploy.ps1
-- cmd: call c:\projects\NonBlockingRtttl\ci\appveyor\version_info_update.bat
+- cmd: call %APPVEYOR_BUILD_FOLDER%\ci\appveyor\arduino_ide_install.bat
+- cmd: call %APPVEYOR_BUILD_FOLDER%\ci\appveyor\install.bat
 
 #---------------------------------#
 #       build configuration       #
 #---------------------------------#
 
-# build platform, i.e. x86, x64, Any CPU. This setting is optional.
-#platform: x86
-
-# build Configuration, i.e. Debug, Release, etc.
-configuration: Release
-
-# to add several configurations to build matrix:
-#configuration:
-#  - Debug
-#  - Release
-
-#build:
-#  project: cmake\build\NonBlockingRtttl.sln
-#  verbosity: minimal
-
 build_script:
-- cmd: call c:\projects\NonBlockingRtttl\ci\appveyor\build_deploy_package.bat
-
-#---------------------------------#
-#      artifacts configuration    #
-#---------------------------------#
-
-artifacts:
-- path: deploy\*.zip
-  name: NonBlockingRtttl portable
-  
-#---------------------------------#
-#     deployment configuration    #
-#---------------------------------#
-
-#prepare deplying to github. See prepare_github_deploy.ps1 for more details.
-deploy:
-- provider: GitHub
-  tag: $(GITHUB_TAG_NAME)
-  release: $(GITHUB_RELEASE_NAME)
-  description: Latest successful AppVeyor CI builds of branch '$(APPVEYOR_REPO_BRANCH)', commit $(APPVEYOR_REPO_COMMIT)
-  auth_token:
-    secure: BgyLisMc154qWpkyBdh8OD+D9HMM+YnBkh7H4MEUShKO3aCU+Fn/XVGJ07fTsRmH
-  artifact: /(.*\.zip|.*\.exe)/
-  draft: false           #true means release is private (visible to contributors only), false is public (visible to everyone)
-  prerelease: true       #true for prerelease, false to identify this release as the 'latest release'
-  force_update: true
+- cmd: call %APPVEYOR_BUILD_FOLDER%\ci\appveyor\arduino_build_example.bat rtttl_blocking
+- cmd: call %APPVEYOR_BUILD_FOLDER%\ci\appveyor\arduino_build_example.bat rtttl_demo
