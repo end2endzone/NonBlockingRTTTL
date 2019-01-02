@@ -267,7 +267,10 @@ void play()
     Serial.println("end of note...");
     #endif
     
+    //issue #6: Bug for ESP8266 environment - noTone() not called at end of sound.
+    //disable sound at the end of a normal playback.
     stop();
+
     return; //end of the song
   }
   else
@@ -292,7 +295,10 @@ void stop()
       buffer++;
     }
 
+    //issue #6: Bug for ESP8266 environment - noTone() not called at end of sound.
+    //disable sound if one abort playback using the stop() command.
     noTone(pin);
+
     playing = false;
   }
 }

@@ -1,3 +1,7 @@
+Changes for 1.2.1:
+
+* Fixed issue #6 - Bug for ESP8266 environment - noTone() not called at end of sound.
+
 Changes for 1.2.0:
 
 * Fixed issue #3 - Move library to the root of the repository
