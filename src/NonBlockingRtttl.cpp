@@ -267,7 +267,7 @@ void play()
     Serial.println("end of note...");
     #endif
     
-    playing = false;
+    stop();
     return; //end of the song
   }
   else
@@ -292,6 +292,7 @@ void stop()
       buffer++;
     }
 
+    noTone(pin);
     playing = false;
   }
 }
