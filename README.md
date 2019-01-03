@@ -1,4 +1,4 @@
-![NonBlockingRTTTL logo](https://github.com/end2endzone/NonBlockingRTTTL/raw/master/docs/NonBlockingRTTTL-splashscreen.png)
+![NonBlockingRTTTL logo](docs/NonBlockingRtttl-splashscreen.png?raw=true)
 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -148,8 +148,8 @@ void loop() {
 
 See the library examples for more details:
 
-* [rtttl_blocking.ino](/src/NonBlockingRTTTL/examples/rtttl_blocking/rtttl_blocking.ino)
-* [rtttl_demo.ino](src/NonBlockingRTTTL/examples/rtttl_demo/rtttl_demo.ino)
+* [rtttl_blocking.ino](examples/rtttl_blocking/rtttl_blocking.ino)
+* [rtttl_demo.ino](examples/rtttl_demo/rtttl_demo.ino)
 
 
 
