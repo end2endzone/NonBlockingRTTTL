@@ -1,5 +1,6 @@
 Changes for 1.2.1:
 
+* Fixed issue #5 - Update INSTALL.md to use the Arduino Library Manager.
 * Fixed issue #6 - Bug for ESP8266 environment - noTone() not called at end of sound.
 
 Changes for 1.2.0:

@@ -1,16 +1,12 @@
-![NonBlockingRTTTL logo](https://raw.githubusercontent.com/end2endzone/NonBlockingRTTTL/master/docs/NonBlickingRtttl-splashscreen.png)
+![NonBlockingRTTTL logo](https://github.com/end2endzone/NonBlockingRTTTL/raw/master/docs/NonBlockingRTTTL-splashscreen.png)
+
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Github Releases](https://img.shields.io/github/release/end2endzone/NonBlockingRTTTL.svg)](https://github.com/end2endzone/NonBlockingRTTTL/releases)
-[![AppVeyor Build Status](https://img.shields.io/appveyor/ci/end2endzone/NonBlockingRTTTL/master.svg?logo=appveyor)](https://ci.appveyor.com/project/end2endzone/NonBlockingRTTTL)
-[![Travis CI Build Status](https://img.shields.io/travis/end2endzone/NonBlockingRTTTL/master.svg?logo=travis&style=flat)](https://travis-ci.org/end2endzone/NonBlockingRTTTL)
-
-AppVeyor build statistics:
-
-[![Build statistics](https://buildstats.info/appveyor/chart/end2endzone/NonBlockingRTTTL)](https://ci.appveyor.com/project/end2endzone/NonBlockingRTTTL/branch/master)
 
 
-# NonBlockingRTTTL
+
+# NonBlockingRTTTL #
 
 NonBlockingRTTTL is a non-blocking arduino library for playing RTTTL melodies. The library allows your program to read or write IOs pins while playing. Implementing "stop" or "next song" push buttons is really easy!
 
@@ -21,7 +17,25 @@ It's main features are:
 *  Really small increase in memory & code footprint compared to the usual blocking algorithm.
 
 
-# Purpose
+
+## Status ##
+
+Build:
+
+| Service | Build | Tests |
+|----|-------|-------|
+| AppVeyor | [![Build status](https://img.shields.io/appveyor/ci/end2endzone/NonBlockingRTTTL/master.svg?logo=appveyor)](https://ci.appveyor.com/project/end2endzone/NonBlockingRTTTL) | [![Tests status](https://img.shields.io/appveyor/tests/end2endzone/NonBlockingRTTTL/master.svg?logo=appveyor)](https://ci.appveyor.com/project/end2endzone/NonBlockingRTTTL/branch/master/tests) |
+| Travis CI | [![Build Status](https://img.shields.io/travis/end2endzone/NonBlockingRTTTL/master.svg?logo=travis&style=flat)](https://travis-ci.org/end2endzone/NonBlockingRTTTL) |  |
+
+Statistics:
+
+| AppVeyor | Travic CI |
+|----------|-----------|
+| [![Statistics](https://buildstats.info/appveyor/chart/end2endzone/NonBlockingRTTTL)](https://ci.appveyor.com/project/end2endzone/NonBlockingRTTTL/branch/master) | [![Statistics](https://buildstats.info/travisci/chart/end2endzone/NonBlockingRTTTL)](https://travis-ci.org/end2endzone/NonBlockingRTTTL) |
+
+
+
+# Purpose #
 
 Most code that can be found on the internet that "play" an RTTTL string is build this way: sequential calls to the `tone()` function followed by a call to the `delay()` function:
 
@@ -39,6 +53,9 @@ This type of implementation might be good for robots but not for realtime applic
 
 This library is non-blocking which make it suitable to be used by more advanced algorithm. The non-blocking RTTTL library is a port of the RTTTL example from the [Tone library](http://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/rogue-code/Arduino-Library-Tone.zip).
 
+
+
+
 # RTTTL format
 
 The Ring Tone Text Transfer Language (RTTTL) audio format is an audio format for storing single tone (monolithic) melodies. Each melody is composed of successive tone frequencies.
@@ -51,7 +68,15 @@ The format is really suitable for embedded device that are limited in memory whi
 
 More information on the RTTTL format is available on its [Wikipedia acticle](https://en.wikipedia.org/wiki/Ring_Tone_Transfer_Language).
 
-# Usage
+
+
+# Usage #
+
+The following instructions show how to use the library.
+
+
+
+## General ##
 
 Call `rtttl::begin()` to setup the non-blocking RTTTL library then call `rtttl::play()` to update the library's state and play notes as required.
 
@@ -60,9 +85,8 @@ Use `rtttl::done()` or `rtttl::isPlaying()` to know if the library is done playi
 Define `RTTTL_NONBLOCKING_INFO` to enable the debugging of the library state on the serial port. Use `NONBLOCKINGRTTTL_VERSION` to read the current version of the library.
 
 
-# Example
 
-### Play melody:
+### Play a melody: ###
 The following example plays 3 melodies. The first melody is played for 5 seconds and stopped. The second and third melodies and played completely and then the program restart again.
 
 ```cpp
@@ -119,27 +143,50 @@ void loop() {
 }
 ```
 
-# Build / Install
+
+## Other samples ##
+
+See the library examples for more details:
+
+* [rtttl_blocking.ino](/src/NonBlockingRTTTL/examples/rtttl_blocking/rtttl_blocking.ino)
+* [rtttl_demo.ino](src/NonBlockingRTTTL/examples/rtttl_demo/rtttl_demo.ino)
+
+
+
+
+# Building #
 
 Please refer to file [INSTALL.md](INSTALL.md) for details on how installing/building the application.
 
-# Testing
-
-The library does not provide any unit tests.
 
 
-# Versioning
+
+# Platforms #
+
+NonBlockingRTTTL has been tested with the following platform:
+
+  * Linux x86/x64
+  * Windows x86/x64
+
+
+
+
+# Versioning #
 
 We use [Semantic Versioning 2.0.0](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/end2endzone/NonBlockingRTTTL/tags).
 
 
-# Authors
+
+
+# Authors #
 
 * **Antoine Beauchamp** - *Initial work* - [end2endzone](https://github.com/end2endzone)
 
 See also the list of [contributors](https://github.com/end2endzone/NonBlockingRTTTL/blob/master/AUTHORS) who participated in this project.
 
 
-# License
+
+
+# License #
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
