@@ -37,9 +37,12 @@ bool playing = false;
 //pre-declaration
 void nextnote();
 
+// tone() and noTone() are not implemented for Arduino core for the ESP32
+// See https://github.com/espressif/arduino-esp32/issues/980
+// and https://github.com/espressif/arduino-esp32/issues/1720
 #if defined(ESP32)
 void noTone(){
-	ledcWrite(0, 0); // channel, volume
+  ledcWrite(0, 0); // channel, volume
 }
 
 void noTone(int pin){
