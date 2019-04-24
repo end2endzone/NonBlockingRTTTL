@@ -37,6 +37,25 @@ bool playing = false;
 //pre-declaration
 void nextnote();
 
+#if defined(ESP32)
+void noTone(){
+	ledcWrite(0, 0); // channel, volume
+}
+
+void noTone(int pin){
+  noTone();
+}
+
+void tone(int frq) {
+  ledcWriteTone(0, frq); // channel, freq
+  ledcWrite(0, 255); // channel, volume
+}
+
+void tone(int pin, int frq, int duration){
+  tone(frq);
+}
+#endif
+
 void begin(byte iPin, const char * iSongBuffer)
 {
   #ifdef RTTTL_NONBLOCKING_DEBUG
@@ -46,6 +65,10 @@ void begin(byte iPin, const char * iSongBuffer)
     
   //init values
   pin = iPin;
+  #if defined(ESP32)
+  ledcSetup(0, 1000, 10); // resolution always seems to be 10bit, no matter what is given
+  ledcAttachPin(pin, 0);
+  #endif
   buffer = iSongBuffer;
   bufferIndex = 0;
   default_dur = 4;
