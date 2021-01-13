@@ -229,6 +229,13 @@ void nextnote()
 
   scale += OCTAVE_OFFSET;
 
+  // now, get optional '.' dotted note again -- after the octave is allowed too
+  if(*buffer == '.')
+  {
+    duration += duration/2;
+    buffer++;
+  }
+
   if(*buffer == ',')
     buffer++;       // skip comma for next note (or we may be at the end)
 
