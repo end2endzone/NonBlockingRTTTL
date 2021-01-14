@@ -229,7 +229,10 @@ void nextnote()
 
   scale += OCTAVE_OFFSET;
 
-  // now, get optional '.' dotted note again -- after the octave is allowed too
+  // now, get optional '.' dotted note again.
+  // A dot /after/ the octave is allowed too, depending on which
+  // RTTTL specification you read.
+  // See https://github.com/end2endzone/NonBlockingRTTTL/issues/10
   if(*buffer == '.')
   {
     duration += duration/2;
