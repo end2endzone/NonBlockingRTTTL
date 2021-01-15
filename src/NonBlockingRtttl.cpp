@@ -229,6 +229,16 @@ void nextnote()
 
   scale += OCTAVE_OFFSET;
 
+  // now, get optional '.' dotted note again.
+  // A dot /after/ the octave is allowed too, depending on which
+  // RTTTL specification you read.
+  // See https://github.com/end2endzone/NonBlockingRTTTL/issues/10
+  if(*buffer == '.')
+  {
+    duration += duration/2;
+    buffer++;
+  }
+
   if(*buffer == ',')
     buffer++;       // skip comma for next note (or we may be at the end)
 
