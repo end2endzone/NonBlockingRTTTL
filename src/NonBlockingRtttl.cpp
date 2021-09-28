@@ -25,6 +25,7 @@ NOTE_C7, NOTE_CS7, NOTE_D7, NOTE_DS7, NOTE_E7, NOTE_F7, NOTE_FS7, NOTE_G7, NOTE_
 #define OCTAVE_OFFSET 0
 
 const char * buffer = "";
+const char * firstNote = "";
 int bufferIndex = -32760;
 byte default_dur = 4;
 byte default_oct = 5;
@@ -32,6 +33,8 @@ int bpm = 63;
 long wholenote;
 byte pin = -1;
 unsigned long noteDelay = 0; //m will always be after which means the last note is done playing
+unsigned long loopGap;
+byte loopCount;
 bool playing = false;
 
 //pre-declaration
@@ -59,7 +62,7 @@ void tone(int pin, int frq, int duration){
 }
 #endif
 
-void begin(byte iPin, const char * iSongBuffer)
+void begin(byte iPin, const char * iSongBuffer, byte iLoopCount, unsigned long iLoopGap)
 {
   #ifdef RTTTL_NONBLOCKING_DEBUG
   Serial.print("playing: ");
@@ -79,6 +82,8 @@ void begin(byte iPin, const char * iSongBuffer)
   bpm=63;
   playing = true;
   noteDelay = 0;
+  loopCount = iLoopCount;
+  loopGap = iLoopGap;
   #ifdef RTTTL_NONBLOCKING_DEBUG
   Serial.print("noteDelay=");
   Serial.println(noteDelay);
@@ -145,6 +150,8 @@ void begin(byte iPin, const char * iSongBuffer)
 
   // BPM usually expresses the number of quarter notes per minute
   wholenote = (60 * 1000L / bpm) * 4;  // this is the time for whole note (in milliseconds)
+
+  firstNote = buffer;
 
   #ifdef RTTTL_NONBLOCKING_INFO
   Serial.print("wn: "); Serial.println(wholenote, 10);
@@ -305,7 +312,19 @@ void play()
     
     //issue #6: Bug for ESP8266 environment - noTone() not called at end of sound.
     //disable sound at the end of a normal playback.
-    stop();
+    if(--loopCount) {
+      noteDelay = millis() + loopGap;
+      buffer = firstNote;
+
+      #ifdef RTTTL_NONBLOCKING_INFO
+        Serial.print("Loop n°");
+        Serial.print(loopCount, 10);
+        Serial.print(" with delay gap ");
+        Serial.print(loopGap, 10);
+        Serial.println("ms");
+      #endif
+    }
+    else stop();
 
     return; //end of the song
   }
