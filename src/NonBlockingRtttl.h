@@ -123,8 +123,10 @@ namespace rtttl
  * Parameters:
  *   iPin:        The pin which is connected to the piezo buffer.
  *   iSongBuffer: The string buffer of the RTTTL song.
+ *   iLoopCount:  Number of times the RTTTL song will be playback (default = 1).
+ *   iLoopGap:    Pause of milliseconds between the song repetition (default = 1000ms).
  ****************************************************************************/
-void begin(byte iPin, const char * iSongBuffer);
+void begin(byte iPin, const char * iSongBuffer, byte iLoopCount = 1, unsigned long iLoopGap = 1000);
 
 /****************************************************************************
  * Description:
