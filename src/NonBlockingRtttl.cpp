@@ -72,8 +72,8 @@ void begin(byte iPin, const char * iSongBuffer, byte iLoopCount, unsigned long i
   //init values
   pin = iPin;
   #if defined(ESP32)
-  ledcSetup(0, 1000, 10); // resolution always seems to be 10bit, no matter what is given
-  ledcAttachPin(pin, 0);
+  // new Core 3.x API: combine setup + attach
+  ledcAttach(pin, 1000, 10); // resolution always seems to be 10bit, no matter what is given
   #endif
   buffer = iSongBuffer;
   bufferIndex = 0;
