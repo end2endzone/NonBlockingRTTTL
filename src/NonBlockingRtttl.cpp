@@ -71,10 +71,17 @@ void begin(byte iPin, const char * iSongBuffer, byte iLoopCount, unsigned long i
     
   //init values
   pin = iPin;
-  #if defined(ESP32)
-  // new Core 3.x API: combine setup + attach
-  ledcAttach(pin, 1000, 10); // resolution always seems to be 10bit, no matter what is given
+#if defined(ESP32)
+  // resolution always seems to be 10bit, no matter what is given
+  #if ARDUINO_ESP32_MAJOR >= 3
+	// Core 3.x
+	ledcAttach(pin, 1000, 10);
+  #else
+	// Core 2.x
+	ledcSetup(0, 1000, 10);
+	ledcAttachPin(pin, 0);
   #endif
+#endif
   buffer = iSongBuffer;
   bufferIndex = 0;
   default_dur = 4;
