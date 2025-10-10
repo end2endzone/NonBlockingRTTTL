@@ -45,7 +45,7 @@ void nextnote();
 // and https://github.com/espressif/arduino-esp32/issues/1720
 #if defined(ESP32)
 void noTone(){
-  ledcWrite(0, 0); // channel, volume
+  ledcWrite(pin, 0); // channel, volume
 }
 
 void noTone(int pin){
@@ -53,8 +53,8 @@ void noTone(int pin){
 }
 
 void tone(int frq) {
-  ledcWriteTone(0, frq); // channel, freq
-  ledcWrite(0, 255); // channel, volume
+  ledcWriteTone(pin, frq); // channel, freq
+  ledcWrite(pin, 255); // channel, volume
 }
 
 void tone(int pin, int frq, int duration){
@@ -72,8 +72,7 @@ void begin(byte iPin, const char * iSongBuffer, byte iLoopCount, unsigned long i
   //init values
   pin = iPin;
   #if defined(ESP32)
-  ledcSetup(0, 1000, 10); // resolution always seems to be 10bit, no matter what is given
-  ledcAttachPin(pin, 0);
+  ledcAttach(pin, 1000, 10);
   #endif
   buffer = iSongBuffer;
   bufferIndex = 0;
