@@ -40,26 +40,99 @@ bool playing = false;
 //pre-declaration
 void nextnote();
 
-// tone() and noTone() are not implemented for Arduino core for the ESP32
-// See https://github.com/espressif/arduino-esp32/issues/980
-// and https://github.com/espressif/arduino-esp32/issues/1720
-#if defined(ESP32)
-void noTone(){
-  ledcWrite(0, 0); // channel, volume
-}
+#ifdef ESP32
+#ifdef ESP_ARDUINO_VERSION
+  #if ESP_ARDUINO_VERSION >= ESP_ARDUINO_VERSION_VAL(3, 0, 0)
+    // Code specific to ESP32 core 3.x
+    // Core 3.x manages channels automatically:
+    // In all esp32 functions, input parameter 'channel' has been changed to 'pin'.
+    // See official documentation for migrating from core 2.x to 3.x:
+    // https://docs.espressif.com/projects/arduino-esp32/en/latest/migration_guides/2.x_to_3.0.html
 
-void noTone(int pin){
-  noTone();
-}
+    #define LEDC_RESOLUTION 10
 
-void tone(int frq) {
-  ledcWriteTone(0, frq); // channel, freq
-  ledcWrite(0, 255); // channel, volume
-}
+    // Function noTone() stop the PWM signal for the given pin.
+    // It does not detach the pin from it's assigned channel.
+    // You can have sequential calls to tone() and noTone()
+    // without having to call toneSetup() between calls.
+    void noTone(uint8_t pin) {
+      ledcWriteTone(pin, 0);
+    }
 
-void tone(int pin, int frq, int duration){
-  tone(frq);
-}
+    // Function tone() set a pin to output a PWM signal that matches the given frequency.
+    // The duration argument is ignored. The function signature 
+    // matches arduino's tone() function for compatibility reasons.
+    // Arduino tone() function:
+    //   https://docs.arduino.cc/language-reference/en/functions/advanced-io/tone/
+    // ESP32 ledcWriteTone() function:
+    //   https://github.com/espressif/arduino-esp32/blob/2.0.17/cores/esp32/esp32-hal-ledc.c#L118
+    void tone(uint8_t pin, unsigned int frq, unsigned long duration) {
+      // don't care about the given duration
+      ledcWriteTone(pin, frq);
+    }
+
+    // Function toneSetup() setup the given pin to output a PWM signal for generating tones with a piezo buzzer.
+    void toneSetup(uint8_t pin) {
+      ledcAttach(pin, 1000, LEDC_RESOLUTION);
+    }
+    
+  #elif ESP_ARDUINO_VERSION >= ESP_ARDUINO_VERSION_VAL(2, 0, 0)
+    // Code specific to ESP32 core 2.x
+    // Core 2.x uses channels instead of pins:
+    // In all esp32 functions, input parameter is a 'channel' instead of a given pin.
+    // This library uses the function getEsp32ChannelForPin() to map a pin to a channel number.
+    // This channel is then used with all esp32 apis functions.
+    // See official documentation for migrating from core 2.x to 3.x:
+    // https://docs.espressif.com/projects/arduino-esp32/en/latest/migration_guides/2.x_to_3.0.html
+
+    #define ESP32_INVALID_CHANNEL 0xFF
+
+    // Function getEsp32ChannelForPin() maps a given pin to a esp32 channel.
+    // Returns a value between 0 and n where n is the maximum of channel for your board.
+    // Returns ESP32_INVALID_CHANNEL if there is no assigned channel for the given pin number.
+    // See your board documentation for details.
+    // See https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/peripherals/ledc.html#led-control-ledc
+    uint8_t getEsp32ChannelForPin(uint8_t pin) {
+      // This library only supports 1 pin at a time.
+      // Always returns channel 0
+      return 0;
+    }
+
+    // Function noTone() stop the PWM signal for the given pin.
+    // It does not detach the pin from it's assigned channel.
+    // You can have sequential calls to tone() and noTone()
+    // without having to call toneSetup() between calls.
+    void noTone(uint8_t pin) {
+      uint8_t channel = getEsp32ChannelForPin(pin);
+      ledcWriteTone(channel, 0); // Silence the buzzer without detaching
+    }
+
+    // Function tone() set a pin to output a PWM signal that matches the given frequency.
+    // The duration argument is ignored. The function signature 
+    // matches arduino's tone() function for compatibility reasons.
+    // Arduino tone() function:
+    //   https://docs.arduino.cc/language-reference/en/functions/advanced-io/tone/
+    // ESP32 ledcWriteTone() function:
+    //   https://github.com/espressif/arduino-esp32/blob/2.0.17/cores/esp32/esp32-hal-ledc.c#L118
+    void tone(uint8_t pin, unsigned int frq, unsigned long duration) {
+      // don't care about the given duration
+      uint8_t channel = getEsp32ChannelForPin(pin);
+      ledcWriteTone(channel, frq);
+    }
+
+    // Function toneSetup() setup the given pin to output a PWM signal for generating tones with a piezo buzzer.
+    void toneSetup(uint8_t pin) {
+      uint8_t channel = getEsp32ChannelForPin(pin);
+      ledcAttachPin(pin, channel); // Attach the pin to the LEDC channel
+    }
+
+  #else
+    #error ESP32 arduino version unsupported
+  #endif
+#else
+  // ESP_ARDUINO_VERSION is undefined.
+  #error ESP32 arduino version unsupported.
+#endif
 #endif
 
 void begin(byte iPin, const char * iSongBuffer, byte iLoopCount, unsigned long iLoopGap)
@@ -72,8 +145,7 @@ void begin(byte iPin, const char * iSongBuffer, byte iLoopCount, unsigned long i
   //init values
   pin = iPin;
   #if defined(ESP32)
-  ledcSetup(0, 1000, 10); // resolution always seems to be 10bit, no matter what is given
-  ledcAttachPin(pin, 0);
+  toneSetup(pin);
   #endif
   buffer = iSongBuffer;
   bufferIndex = 0;
