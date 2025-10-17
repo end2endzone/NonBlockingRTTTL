@@ -1,0 +1,90 @@
+name: Windows
+
+on: [push, pull_request]
+
+env:
+  PlatformToolset: v142
+
+  # build platform, i.e. x86, x64, Any CPU. This setting is optional.
+  Platform: Win32
+
+  # build Configuration, i.e. Debug, Release, etc.
+  Configuration: Release
+  
+jobs:
+  build:
+    # For a list of available runner types, refer to
+    # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Configure GIT
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: cmd
+      run: |
+        git config --local core.autocrlf true
+        git config --local advice.detachedHead false
+        git submodule update --init --recursive
+
+    - name: Setup python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+        architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
+
+    - name: Create new environment variables
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: cmd
+      run: |
+        python -c "import os; print('GIT_REPOSITORY=' + os.path.split(os.getenv('GITHUB_REPOSITORY'))[1]);" >> %GITHUB_ENV%
+        python -c "import os; print('GIT_BRANCH=' + os.path.split(os.getenv('GITHUB_REF'))[1]);" >> %GITHUB_ENV%
+        echo GITHUB_WORKFLOW=%GITHUB_WORKFLOW%>> %GITHUB_ENV%
+
+    - name: List environment variables for debugging
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: cmd
+      run: |
+        set
+    
+    - name: Install yamlpath
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: cmd
+      run: call ci\github\install_yamlpath.bat
+    
+    - name: Install pyserial
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: cmd
+      run: call ci\github\install_pyserial.bat
+    
+    - name: Install Arduino CLI
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: cmd
+      run: call ci\github\install_arduinocli.bat
+    
+    - name: Install Arduino cores
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: cmd
+      run: call ci\github\install_arduino_cores.bat
+
+    - name: Install Arduino library dependencies
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: cmd
+      run: call ci\github\arduino_install_libraries.bat
+
+    - name: Install this arduino library
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: cmd
+      run: call ci\github\install_this.bat
+
+    - name: Build Arduino sketch - rtttl_blocking
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: cmd
+      run: python ci\generic\arduino_build_sketch.py rtttl_blocking
+
+    - name: Build Arduino sketch - rtttl_demo
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: cmd
+      run: python ci\generic\arduino_build_sketch.py rtttl_demo

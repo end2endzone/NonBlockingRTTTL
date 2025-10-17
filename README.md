@@ -24,6 +24,8 @@ Build:
 
 | Service | Build | Tests |
 |----|-------|-------|
+| Windows Server 2019 | [![Build on Windows](https://github.com/end2endzone/NonBlockingRtttl/actions/workflows/build_windows.yml/badge.svg)](https://github.com/end2endzone/NonBlockingRtttl/actions/workflows/build_windows.yml) | N/A |
+| Ubuntu 22.04        | [![Build on Linux](https://github.com/end2endzone/NonBlockingRtttl/actions/workflows/build_linux.yml/badge.svg)](https://github.com/end2endzone/NonBlockingRtttl/actions/workflows/build_linux.yml)       | N/A |
 
 
 

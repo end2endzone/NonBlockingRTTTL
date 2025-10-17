@@ -1,0 +1,98 @@
+name: Linux
+
+on: [push, pull_request]
+
+env:
+  # build Configuration, i.e. Debug, Release, etc.
+  PRODUCT_BUILD_TYPE: Release
+
+  # build Configuration, i.e. Debug, Release, etc.
+  Configuration: Release
+
+  # Required for Github Action. Unit test TestProcess.testKillAndTerminate fails to start /bin/nano with the following error: "Error opening terminal: unknown."
+  TERM: xterm
+
+jobs:
+  build:
+    # For a list of available runner types, refer to
+    # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Configure GIT
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: bash
+      run: |
+        git config --local core.autocrlf true
+        git config --local advice.detachedHead false
+        git submodule update --init --recursive
+
+    - name: Setup python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+        architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
+
+    - name: Create new environment variables
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: bash
+      run: |
+        python -c "import os; print('GIT_REPOSITORY=' + os.path.split(os.getenv('GITHUB_REPOSITORY'))[1]);" >> $GITHUB_ENV
+        python -c "import os; print('GIT_BRANCH=' + os.path.split(os.getenv('GITHUB_REF'))[1]);" >> $GITHUB_ENV
+        echo GITHUB_WORKFLOW=$GITHUB_WORKFLOW>> $GITHUB_ENV
+
+    - name: List environment variables for debugging
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: bash
+      run: |
+        env
+
+    - name: Configure user profile and directories
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: bash
+      run: |
+        mkdir ~/Documents   #required for TestUser.testFoldersExisting() because /home/travis/Documents does not exists!
+        mkdir ~/Desktop     #required for TestUser.testFoldersExisting() because /home/travis/Desktop   does not exists!
+    
+    - name: Install yamlpath
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: bash
+      run: ./ci/github/install_yamlpath.sh
+    
+    - name: Install pyserial
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: bash
+      run: ./ci/github/install_pyserial.sh
+    
+    - name: Install Arduino CLI
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: bash
+      run: ./ci/github/install_arduinocli.sh
+    
+    - name: Install Arduino cores
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: bash
+      run: ./ci/github/install_arduino_cores.sh
+
+    - name: Install Arduino library dependencies
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: bash
+      run: ./ci/github/arduino_install_libraries.sh
+
+    - name: Install this arduino library
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: bash
+      run: ./ci/github/install_this.sh
+
+    - name: Build Arduino sketch - rtttl_blocking
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: bash
+      run: python ci/generic/arduino_build_sketch.py rtttl_blocking
+
+    - name: Build Arduino sketch - rtttl_demo
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: bash
+      run: python ci/generic/arduino_build_sketch.py rtttl_demo
